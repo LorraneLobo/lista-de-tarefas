@@ -7,6 +7,7 @@ import com.example.listadetarefas.R;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.Log;
 import android.view.View;
 
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -15,10 +16,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.listadetarefas.adapter.TarefaAdapter;
 import com.example.listadetarefas.databinding.ActivityMainBinding;
+import com.example.listadetarefas.helper.RecyclerItemClickListener;
 import com.example.listadetarefas.model.Tarefa;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
@@ -43,7 +46,29 @@ public class MainActivity extends AppCompatActivity {
         //Configurar recycler
         recyclerListaTarefas = binding.content.recyclerListaTarefas;
 
+        //Adicionar evento de clique
+        recyclerListaTarefas.addOnItemTouchListener(
+                new RecyclerItemClickListener(
+                        getApplicationContext(),
+                        recyclerListaTarefas,
+                        new RecyclerItemClickListener.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(View view, int position) {
+                                Log.i("clique", "onItemClick");
+                            }
 
+                            @Override
+                            public void onLongItemClick(View view, int position) {
+                                Log.i("clique", "onLongItemClick");
+                            }
+
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                            }
+                        }
+                )
+        );
 
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
