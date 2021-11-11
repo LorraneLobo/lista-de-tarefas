@@ -19,6 +19,7 @@ import com.example.listadetarefas.adapter.TarefaAdapter;
 import com.example.listadetarefas.databinding.ActivityMainBinding;
 import com.example.listadetarefas.helper.DbHelper;
 import com.example.listadetarefas.helper.RecyclerItemClickListener;
+import com.example.listadetarefas.helper.TarefaDAO;
 import com.example.listadetarefas.model.Tarefa;
 
 import android.view.Menu;
@@ -85,26 +86,13 @@ public class MainActivity extends AppCompatActivity {
     public void carregarListaTarefas(){
 
         //Listar tarefas
-        Tarefa tarefa1 = new Tarefa();
-        tarefa1.setNomeTarefa("Ir ao mercado");
-        listaTarefas.add(tarefa1);
-
-        Tarefa tarefa2 = new Tarefa();
-        tarefa1.setNomeTarefa("Ir ao feira");
-        listaTarefas.add(tarefa2);
+        TarefaDAO tarefaDAO = new TarefaDAO(getApplicationContext());
+        listaTarefas = tarefaDAO.listar();
         /*
             Exibe lista de tarefas no Recyclerview
         */
         //Configurar um adapter
         tarefaAdapter = new TarefaAdapter(listaTarefas);
-
-        DbHelper db = new DbHelper(getApplicationContext());
-
-        ContentValues cv = new ContentValues();
-        cv.put("nome", "Teste");
-
-        db.getWritableDatabase().insert("tarefas", null, cv);
-
 
         //Configurar Recyclerview
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
@@ -128,10 +116,12 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.itemSalvar) {
-            return true;
+        switch (item.getItemId()){
+            case R.id.itemSalvar:
+                //Executa ação para o item salvar
+                TarefaDAO tarefaDAO = new TarefaDAO(getApplicationContext());
+                //tarefaDAO.salvar();
+                break;
         }
 
         return super.onOptionsItemSelected(item);
