@@ -62,9 +62,6 @@ public class TarefaDAO implements ITarefaDAO{
     @Override
     public boolean deletar(Tarefa tarefa) {
 
-        ContentValues cv = new ContentValues();
-        cv.put("nome", tarefa.getNomeTarefa());
-
         try {
             String[] args ={tarefa.getId().toString()};
 
