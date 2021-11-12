@@ -57,7 +57,15 @@ public class MainActivity extends AppCompatActivity {
                         new RecyclerItemClickListener.OnItemClickListener() {
                             @Override
                             public void onItemClick(View view, int position) {
-                                Log.i("clique", "onItemClick");
+
+                                //Recuperar tarefa para edicao
+                                Tarefa tarefaSelecionada = listaTarefas.get(position);
+
+                                //Envia tarefa para tela adicionar tarefa
+                                Intent intent = new Intent(MainActivity.this, AdicionarTarefaActivity.class);
+                                intent.putExtra("tarefaSelecionada", tarefaSelecionada);
+
+                                startActivity(intent);
                             }
 
                             @Override
@@ -108,22 +116,22 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_adicionar_tarefa, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.itemSalvar:
-                //Executa ação para o item salvar
-                TarefaDAO tarefaDAO = new TarefaDAO(getApplicationContext());
-                //tarefaDAO.salvar();
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.menu_adicionar_tarefa, menu);
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()){
+//            case R.id.itemSalvar:
+//                //Executa ação para o item salvar
+//                TarefaDAO tarefaDAO = new TarefaDAO(getApplicationContext());
+//                //tarefaDAO.salvar();
+//                break;
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
 }
